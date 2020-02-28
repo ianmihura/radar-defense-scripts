@@ -1,0 +1,54 @@
+
+{
+	"eventGroupList": [
+		{
+			"id": "morale",
+			"events": [
+				{
+					"id": 4000,
+					"title": "Desertion",
+					"story": "Some workers are weary and decide to abandon their post. They are now deserters, and can be executed if found. They managed to steal some valuable resources.",
+					"affects": {
+						"morale": -1,
+						"power": -1,
+						"money": -2
+					},
+					"choices": [ 4001, 4002 ]
+				},
+				{
+					"id": 4001,
+					"title": "A Desertion",
+					"story": "This is desition A. Some workers are weary and decide to abandon their post. They are now deserters, and can be executed if found. They managed to steal some valuable resources.",
+					"affects": {
+						"morale": -1,
+						"power": -1,
+						"money": -2
+					}
+				},
+				{
+					"id": 4002,
+					"title": "B Desertion",
+					"story": "Desition B was taken. Some workers are weary and decide to abandon their post. They are now deserters, and can be executed if found. They managed to steal some valuable resources.",
+					"affects": {
+						"morale": -1,
+						"power": -1,
+						"money": -2
+					}
+				},
+				{
+					"id": 4010,
+					"title": "00 other event",
+					"story": "Desition B was taken. Some workers are weary and decide to abandon their post. They are now deserters, and can be executed if found. They managed to steal some valuable resources.",
+					"affects": {
+						"morale": -1,
+						"power": -1,
+						"money": -2
+					}
+				}
+
+			]
+
+		}
+
+	]
+}
