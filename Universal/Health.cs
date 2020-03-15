@@ -19,18 +19,28 @@ public class Health : MonoBehaviour {
     public int GetHealth => health;
     public int GetMaxHealth => maxHealth;
     
-    public void DealDamage(int damage) {
+    public bool DealDamage(int damage) {
         health -= damage;
 
         if (health <= 0) {
             Die();
+            return true;
         } else if (GetComponent<Defender>() && health == 1) {
             _warningSign();
         }
+
+        return false;
     }
 
     private void _warningSign() {
-        _currentWarningSign = Instantiate(_warning, transform.position, Quaternion.identity);
+        _currentWarningSign = Instantiate(_warning, new Vector3(transform.position.x, transform.position.y, transform.position.z - 0.1f), Quaternion.identity);
+        _currentWarningSign.transform.SetParent(transform);
+    }
+
+    public void BoxExec() {
+        _heatZones.BoxExec(transform.position);
+
+        Destroy(gameObject, 0.25f);
     }
 
     public void Die() {

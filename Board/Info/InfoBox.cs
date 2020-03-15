@@ -24,7 +24,9 @@ public class InfoBox : MonoBehaviour {
     }
 
     private void OnMouseDown() {
-        _gameObject.GetComponent<Health>().Die();
+        if (!_gameObject)
+            return;
+        _gameObject.GetComponent<Health>().BoxExec();
     }
 
     public void DestroyMe() {

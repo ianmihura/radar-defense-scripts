@@ -8,7 +8,8 @@ public class ControlTower : MonoBehaviour {
     CurrencyController _currencyController;
     [SerializeField] private GameObject _warning;
     private GameObject _currentWarningSign;
-    
+    [SerializeField] public Sprite BrokenControlTower;
+
     [SerializeField] private int _health = 4;
     [SerializeField] private bool _isActive = true;
     [SerializeField] private bool _isFixable;
@@ -53,20 +54,28 @@ public class ControlTower : MonoBehaviour {
     private void _updateTowerHealth() {
         if (_health >= MAX_HEALTH) {
             _health = MAX_HEALTH;
+
             _activateTower(true);
+            _destroyCurrentWarningSign();
 
         } else if (_health <= 0) {
             _health = 0;
+
+            _destroyCurrentWarningSign();
             _destroyTower();
 
         } else {
-            if (_health == 1) _signalWarning();
-            else if (_currentWarningSign) Destroy(_currentWarningSign);
+            _signalWarning();
             
             _activateTower(false);
         }
         
         _base.UpdateBaseHealth();
+    }
+
+    private void _destroyCurrentWarningSign() {
+        if (_currentWarningSign)
+            Destroy(_currentWarningSign);
     }
     
     private void _activateTower(bool activate) {
@@ -79,13 +88,16 @@ public class ControlTower : MonoBehaviour {
 
     private void _destroyTower() {
         _isFixable = _isActive = false;
-        if (_currentWarningSign)
-            Destroy(_currentWarningSign);
+
+        FindObjectOfType<RelationshipsController>().AddToAll(-1);
         FindObjectOfType<BoardEvents>().TriggerBlueFlash();
+
+        GetComponentInChildren<SpriteRenderer>().sprite = BrokenControlTower;
     }
 
     private void _signalWarning() {
-        _currentWarningSign = Instantiate(_warning, transform.position, Quaternion.identity);
+        if (!_currentWarningSign)
+            _currentWarningSign = Instantiate(_warning, transform.position, Quaternion.identity);
     }
 
     private void Start() {

@@ -41,7 +41,6 @@ public class CurrencyController : MonoBehaviour {
         _updateToAddAmount();
     } 
 
-    
     private void Start() {
         _updateToAddAmount();
     }
@@ -107,6 +106,9 @@ public class CurrencyController : MonoBehaviour {
         _powerTotalNextTurn += FindObjectOfType<BRS>().GetPower;
         _moneyTotalNextTurn += FindObjectOfType<BRS>().GetMoney;
 
+        _powerTotalNextTurn = _powerTotalNextTurn < 0 ? 0 : _powerTotalNextTurn;
+        _moneyTotalNextTurn = _moneyTotalNextTurn < 0 ? 0 : _moneyTotalNextTurn;
+
         _updateDisplay();
     }
     
@@ -114,7 +116,7 @@ public class CurrencyController : MonoBehaviour {
         _powerText.text = power.ToString();
         _moneyText.text = money.ToString();
 
-        _powerTextToAdd.text = "+" + _powerTotalNextTurn;
-        _moneyTextToAdd.text = "+" + _moneyTotalNextTurn;
+        _powerTextToAdd.text = _powerTextToAdd.text == "0" ? "+" + _powerTotalNextTurn : "0";
+        _moneyTextToAdd.text = _moneyTextToAdd.text == "0" ? "+" + _moneyTotalNextTurn : "0";
     }
 }

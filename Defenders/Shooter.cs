@@ -52,9 +52,8 @@ public class Shooter : MonoBehaviour {
     }
 
     public void _loadAutomaticShots() {
-        for (int i = 0; i < _automaticShots; i++) {
+        for (int i = 0; i < _automaticShots; i++)
             LoadFire();
-        }
     }
 
     public void SetAutomaticShots(bool isAuto) {

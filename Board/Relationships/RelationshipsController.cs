@@ -11,27 +11,29 @@ public class RelationshipsController : MonoBehaviour {
     private int _comradery; // index: 2
     private int _loyalty; // index: 3
 
-    private string MORALE_INDEX = "4";
-    private string COMRADERY_INDEX = "2";
-    private string LOYALTY_INDEX = "3";
+    private readonly string MORALE_INDEX = "4";
+    private readonly string COMRADERY_INDEX = "2";
+    private readonly string LOYALTY_INDEX = "3";
 
-    private int ADD_VALUE = 5;
-    private int RELATIONSHIP_START = 25;
+    private readonly int ADD_VALUE = 5;
+    private readonly int RELATIONSHIP_START = 25;
 
-    private int LOW_BOUND = 25;
-    private int MEDIUM_BOUND = 50;
-    private int HIGH_BOUND = 75;
+    private readonly int LOW_BOUND = 25;
+    private readonly int MEDIUM_BOUND = 50;
+    private readonly int HIGH_BOUND = 75;
 
-    private int LOW_ENDSTATE = 0;
-    private int HIGH_ENDSTATE = 100;
+    private readonly int LOW_ENDSTATE = 0;
+    private readonly int HIGH_ENDSTATE = 100;
 
-    public void AddMorale() { _morale += ADD_VALUE; _checkRelationships(_morale); }
-    public void AddComradery() { _comradery += ADD_VALUE; _checkRelationships(_comradery); }
-    public void AddLoyalty() { _loyalty += ADD_VALUE; _checkRelationships(_loyalty); }
+    public void AddMorale(int amount) { _morale += (ADD_VALUE * amount); _checkRelationships(_morale); }
+    public void AddComradery(int amount) { _comradery += (ADD_VALUE * amount); _checkRelationships(_comradery); }
+    public void AddLoyalty(int amount) { _loyalty += (ADD_VALUE * amount); _checkRelationships(_loyalty); }
 
-    public void SubstractMorale() { _morale -= ADD_VALUE; _checkRelationships(_morale); }
-    public void SubstractComradery() { _comradery -= ADD_VALUE; _checkRelationships(_comradery); }
-    public void SubstractLoyalty() { _loyalty -= ADD_VALUE; _checkRelationships(_loyalty); }
+    public void AddToAll(int amount) {
+        AddComradery(-1);
+        AddMorale(-1);
+        AddLoyalty(-1);
+    }
 
     public int GetMorale => _morale;
     public int GetComradery => _comradery;
@@ -47,31 +49,29 @@ public class RelationshipsController : MonoBehaviour {
         int comraderyDiff = System.Math.Max(100 - _comradery, _comradery);
         int loyaltyDiff = System.Math.Max(100 - _loyalty, _loyalty);
 
-        if (moralDiff > comraderyDiff && moralDiff > loyaltyDiff) {
+        if (moralDiff > comraderyDiff && moralDiff > loyaltyDiff)
             return MORALE_INDEX;
-        } else if (comraderyDiff > moralDiff && comraderyDiff > loyaltyDiff) {
+        else if (comraderyDiff > moralDiff && comraderyDiff > loyaltyDiff)
             return COMRADERY_INDEX;
-        } else {
+        else
             return LOYALTY_INDEX;
-        }
     }
 
     /*
-    * Low => 1
-    * Medium => 2
-    * High => 3
-    * Error => 0
-    */
+     * Low => 1
+     * Medium => 2
+     * High => 3
+     * Error => 0
+     */
     private int _getLevel(int relationship) {
-        if (relationship < LOW_BOUND) {
+        if (relationship < LOW_BOUND)
             return 1;
-        } else if (relationship < MEDIUM_BOUND) {
+        else if (relationship < MEDIUM_BOUND)
             return 2;
-        } else if (relationship < HIGH_BOUND) {
+        else if (relationship < HIGH_BOUND)
             return 3;
-        } else {
+        else
             return 0;
-        }
     }
 
     void Start() {

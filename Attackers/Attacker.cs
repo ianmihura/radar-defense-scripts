@@ -7,18 +7,21 @@ using UnityEngine.Experimental.VFX;
 
 public class Attacker : MonoBehaviour {
 
-    public float BlockDistance = 0.5f;
-    public const float BLOCK_DISTANCE = 0.92f;
+    public float BlockDistance = 1.0f;
+    public const float BLOCK_DISTANCE = 1.0f;
     private bool _advance = false;
     private float _startPosition = 0f;
 
+    private WaveController _waveController;
+
     private void Awake() {
         FindObjectOfType<WaveController>().AttackerSpawned();
+        _waveController = FindObjectOfType<WaveController>();
     }
-    
+
     private void OnDestroy() {
-        if (FindObjectOfType<WaveController>())
-            FindObjectOfType<WaveController>().AttackerKilled();
+        if (_waveController)
+            _waveController.AttackerKilled();
     }
 
     private void Update() {
@@ -34,6 +37,7 @@ public class Attacker : MonoBehaviour {
 
     public void Walk() {
         _startPosition = transform.position.x;
+
         _advance = true;
     }
 
@@ -55,13 +59,17 @@ public class Attacker : MonoBehaviour {
 
         } else if (defender && !defender.isPlane) {
             health.DealDamage(otherObject.GetComponent<Exploder>().GetDamage);
-            otherObject.GetComponent<Health>().DealDamage(damage);
+            var defenderIsDead = otherObject.GetComponent<Health>().DealDamage(damage);
+            if (!defenderIsDead) health.Die();
 
         } else if (otherObject.GetComponent<HZ>()) {
             health.DealDamage(otherObject.GetComponent<HZ>().GetDamage);
 
         } else if (otherObject.GetComponent<EndOfBoard>()) {
             health.DestroyEscapingAttacker();
+
+        } else if (otherObject.GetComponent<AsteroidField>()) {
+            health.DealDamage(otherObject.GetComponent<AsteroidField>().GetDamage);
         }
     }
 }

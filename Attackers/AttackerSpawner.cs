@@ -21,17 +21,17 @@ public class AttackerSpawner : MonoBehaviour {
 
     private Attacker _getAttackerToSpawn() {
         int attackerIndex = 0;
-        float range = Random.Range(0f, 4f);
+        float range = Random.Range(0f, 3f);
 
         // difficulty measured with linear functions, with a range of 1
         if (range > 1f) return null;
         if (range > (_waveDifficulty * 0.5f + 0.5f)) {
             attackerIndex = 0;
-        } else if (range > (_waveDifficulty * 0.8f + 0.1f)) {
+        } else if (range > (_waveDifficulty - 0.2f)) {
             attackerIndex = 1;
-        } else if (range > (_waveDifficulty * 0.5f - 0.05f)) {
+        } else if (range > (_waveDifficulty * 0.8f - 0.2f)) {
             attackerIndex = 2;
-        } else if (range > (_waveDifficulty * 0.5f - 0.2f)) {
+        } else if (range > (_waveDifficulty - 0.4f)) {
             attackerIndex = 3;
         } else {
             attackerIndex = 4;

@@ -8,7 +8,15 @@ public class SingleEvent {
     public int id;
     public string title;
     public string story;
-    public Affects affects;
-    public int[] choices;
+    public string choice_id;
+    public string choice_text;
 
+    public int loyalty;
+    public int comradery;
+    public int morale;
+    public int power;
+    public int money;
+    public string board_event;
+
+    // public string image;
 }

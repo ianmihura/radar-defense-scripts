@@ -30,29 +30,29 @@ public class EventListController : MonoBehaviour {
     }
 
     public SingleEvent GetEventById(string id) {
-        // ex. id == 4170
-        // ex. group == 4
         int group = int.Parse(id.Substring(0, 1));
-        // ex. evt == 17
         int evt = int.Parse(id.Substring(1, 2));
-        // ex. order == 0
         int order = int.Parse(id.Substring(3, 1));
 
         // evt is the lowest place (in the array) that the Event can be in
         SingleEvent returnEvent = GetEventGroup(group).events[evt];
 
-        // get the real index (probably higher than inivial returnEvent)
-        int returnEventIndex = _getEventIndex(returnEvent, evt, group);
+        // get the real index (may be higher than inicial returnEvent)
+        // int returnEventIndex = _getEventIndex(returnEvent, evt, group);
 
         // (order) amount more over the inicial index
-        returnEvent = GetEventGroup(group).events[returnEventIndex + order];
+        // returnEvent = GetEventGroup(group).events[returnEventIndex + order];
 
-        if (returnEvent.id != int.Parse(id))
+        if (returnEvent.id != int.Parse(id)) {
             Debug.Log("found wrong event");
+            Debug.Log(returnEvent.id);
+        }
+        Debug.Log(id);
 
         return returnEvent;
     }
 
+    // TODO: random event
     public SingleEvent GetRandomEvent() {
         return GetEventById(_getNextEventId());
     }
@@ -60,7 +60,6 @@ public class EventListController : MonoBehaviour {
     // 2 in 3 chances you get a Relationship Event
     // 1 in 3 chances you get a General Event
     private string _getNextEventId() {
-
         string group = Random.Range(0, 3) < 1 ? "1" : _getRelationshipEvent();
         string evt = _getRandomEvtByGroup(int.Parse(group));
 
@@ -98,9 +97,10 @@ public class EventListController : MonoBehaviour {
             if (_getOrder(GetEventGroup(group).events[i]) == "0")
                 totalEventsForGroup++;
 
-        int randomEvt = Random.Range(0, totalEventsForGroup);
+        var randomEvt = Random.Range(0, totalEventsForGroup).ToString();
+        randomEvt = randomEvt.Length == 2 ? randomEvt : "0" + randomEvt;
 
-        return randomEvt.ToString();
+        return randomEvt;
     }
 
     private int _getEventIndex(SingleEvent returnEvent, int evt, int group) {

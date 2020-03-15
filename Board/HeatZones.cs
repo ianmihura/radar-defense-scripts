@@ -18,6 +18,16 @@ public class HeatZones : MonoBehaviour {
         _placeHZ(defenderPosition);
     }
 
+    public void BoxExec(Vector3 boxPosition) {
+        _handleAdjacent();
+
+        _placeHZ(boxPosition);
+        _placeHZ(new Vector3(boxPosition.x + 1, boxPosition.y, boxPosition.z));
+        _placeHZ(new Vector3(boxPosition.x + 2, boxPosition.y, boxPosition.z));
+        _placeHZ(new Vector3(boxPosition.x, boxPosition.y - 1, boxPosition.z));
+        _placeHZ(new Vector3(boxPosition.x, boxPosition.y + 1, boxPosition.z));
+    }
+
     private void _handleAdjacent() {
         // TODO: handle adjacent
         // prolongue life of adjacent

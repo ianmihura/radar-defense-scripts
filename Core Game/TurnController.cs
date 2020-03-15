@@ -6,14 +6,21 @@ using UnityEngine;
 public class TurnController : MonoBehaviour {
     private int _currentTurn = 0;
     private bool _spawning = true;
-    
+    private bool _cooldown = false;
+    private int _cooldownCounter;
+    private void _cooldownCounterReset() => _cooldownCounter = 50;
+    private void _cooldownCount() => _cooldownCounter -= 1;
+    private bool _isCool => _cooldownCounter <= 0;
+
+
     private EventsController _events;
     private WaveController _waveController;
     private CurrencyController _currencyController;
     private AttackerSpawner[] _attackerSpawners;
     private HeatZones _heatZones;
     private InfoController _infoController;
-    
+    private BoardEvents _boardEvents;
+
     private void Start() {
         _events = FindObjectOfType<EventsController>();
         _waveController = FindObjectOfType<WaveController>();
@@ -21,30 +28,44 @@ public class TurnController : MonoBehaviour {
         _attackerSpawners = FindObjectsOfType<AttackerSpawner>();
         _heatZones = FindObjectOfType<HeatZones>();
         _infoController = FindObjectOfType<InfoController>();
+        _boardEvents = FindObjectOfType<BoardEvents>();
+
+        _cooldownCounterReset();
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
+        if (_isCool && Input.GetKeyDown(KeyCode.Space)) {
             StartCoroutine(NextTurn());
         }
+
+        _cooldownCount();
     }
 
     private void OnMouseDown() {
-        StartCoroutine(NextTurn());
+        if(_isCool)
+            StartCoroutine(NextTurn());
     }
 
     IEnumerator NextTurn() {
+        _cooldownCounterReset();
+
         /* ENEMY */
-        _attackerSpawn();
-        _attackerWalk();
-        
+        if (!_boardEvents.GetDustStorm) {
+            _attackerSpawn();
+            _attackerWalk();
+        }
+
         /* PLAYER */
-        _currencyController.Produce();
-        _defenderFire();
+        if (!_boardEvents.GetThunderStorm) {
+            _currencyController.Produce();
+            _defenderWalk();
+            _defenderFire();
+        }
 
         /* GAME LOGIC & EVENT */
         _heatZones.DissipateHeat();
         _infoController.SetInfo(null);
+        _boardEvents.PassTurn();
 
         yield return new WaitForSeconds(1.5f);
         
@@ -88,7 +109,15 @@ public class TurnController : MonoBehaviour {
             attacker.Walk();
         }
     }
-    
+
+    private void _defenderWalk() {
+        var defenders = FindObjectsOfType<Defender>();
+
+        foreach (var defender in defenders) {
+            defender.Walk();
+        }
+    }
+
     private void _defenderFire() {
         var shooters = FindObjectsOfType<Shooter>();
 
