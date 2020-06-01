@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class WaveController : MonoBehaviour {
     private int[] TURNS_FOR_WAVE = {10, 12, 15, 20, 20, 25, 26, 27, 28, 29, 30};
-    private string[] ENABLE_IN_WAVE = { "", "", "", "X70", "", "P36" };
+    private string[] ENABLE_IN_WAVE = { "", "", "X70", "P36", "", "", "", "", "", "", "" };
 
-    private int _currentWave = 0;
+    [SerializeField] private int _currentWave = 0;
     private int _numberOfAttackers = 0;
 
     private TurnController _turnController;
@@ -28,11 +28,10 @@ public class WaveController : MonoBehaviour {
 
     public void NextWave() {
         _currentWave++;
-        if (ENABLE_IN_WAVE.Length <= _currentWave)
-            return;
+
+        FindObjectOfType<EventsController>().ShootStartEvents(_currentWave);
 
         var defenderButtons = FindObjectsOfType<DefenderButton>();
-
         switch (ENABLE_IN_WAVE[_currentWave]) {
 
             case "X70":
@@ -52,7 +51,6 @@ public class WaveController : MonoBehaviour {
                     return;
                 }
             }
-
             break;
 
             default:

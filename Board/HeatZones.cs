@@ -22,10 +22,10 @@ public class HeatZones : MonoBehaviour {
         _handleAdjacent();
 
         _placeHZ(boxPosition);
-        _placeHZ(new Vector3(boxPosition.x + 1, boxPosition.y, boxPosition.z));
-        _placeHZ(new Vector3(boxPosition.x + 2, boxPosition.y, boxPosition.z));
-        _placeHZ(new Vector3(boxPosition.x, boxPosition.y - 1, boxPosition.z));
-        _placeHZ(new Vector3(boxPosition.x, boxPosition.y + 1, boxPosition.z));
+        _placeHZ(new Vector3(boxPosition.x + 1, boxPosition.y, boxPosition.z + 1));
+        _placeHZ(new Vector3(boxPosition.x + 2, boxPosition.y, boxPosition.z + 1));
+        _placeHZ(new Vector3(boxPosition.x, boxPosition.y - 1, boxPosition.z + 1));
+        _placeHZ(new Vector3(boxPosition.x, boxPosition.y + 1, boxPosition.z + 1));
     }
 
     private void _handleAdjacent() {

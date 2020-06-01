@@ -15,7 +15,7 @@ public class Shooter : MonoBehaviour {
 
     private const string PROJECTILE_PARENT_NAME = "Projectiles";
 
-    private int _shotLoop = 0;
+    private int _shotLoopCounter = 0;
     private bool _allowFire = false;
 
     public bool IsShootingAutomatic => _automaticShots > 0;
@@ -27,20 +27,22 @@ public class Shooter : MonoBehaviour {
 
     private void Start() {
         _currencyController = FindObjectOfType<CurrencyController>();
-        CreateProjectileParent();
+        _createProjectileParent();
     }
 
-    private void CreateProjectileParent() {
+    private void _createProjectileParent() {
         _projectileParent = GameObject.Find(PROJECTILE_PARENT_NAME);
         if (!_projectileParent)
             _projectileParent = new GameObject(PROJECTILE_PARENT_NAME);
     }
 
     public void LoadFire() {
-        if (_currencyController.HasEnoughCurrency(_shotsCost, 0)) {
-            _currencyController.SpendCurrency(_shotsCost, 0);
-            _shotsToFire++;
-        }
+        if (!_currencyController.HasEnoughCurrency(_shotsCost, 0))
+            return;
+
+        _currencyController.SpendCurrency(_shotsCost, 0);
+        _shotsToFire++;
+        SetAutomaticShots();
     }
 
     public void UnloadFire() {
@@ -49,15 +51,16 @@ public class Shooter : MonoBehaviour {
         
         _currencyController.UnspendCurrency(_shotsCost, 0);
         _shotsToFire--;
+        SetAutomaticShots();
     }
 
-    public void _loadAutomaticShots() {
-        for (int i = 0; i < _automaticShots; i++)
-            LoadFire();
+    public void SetAutomaticShots() {
+        _automaticShots = FindObjectOfType<InfoShooterAuto>().IsAutoEnabled
+            ? _shotsToFire : 0;
     }
 
-    public void SetAutomaticShots(bool isAuto) {
-        _automaticShots = isAuto ? _shotsToFire : 0;
+    public void Fire() {
+        _allowFire = true;
     }
 
     private void Update() {
@@ -70,17 +73,19 @@ public class Shooter : MonoBehaviour {
             _loadAutomaticShots();
         }
 
-        if (_shotLoop > 15){
-            _fire();
-            _shotsToFire--;
-            _shotLoop = 0;
-        } else {
-            _shotLoop++;
-        }
+        _shootLoop();
     }
 
-    public void Fire() {
-        _allowFire = true;
+    private void _shootLoop() {
+        // 15 update loops : time between shots
+        if (_shotLoopCounter < 15) {
+            _shotLoopCounter++;
+            return;
+        }
+        
+        _fire();
+        _shotsToFire--;
+        _shotLoopCounter = 0;
     }
 
     private void _fire() {
@@ -88,5 +93,15 @@ public class Shooter : MonoBehaviour {
             Instantiate(projectile, gun.transform.position, transform.rotation)
             as GameObject;
         newProjectile.transform.parent = _projectileParent.transform;
+    }
+
+    private void _loadAutomaticShots() {
+        for (int i = 0; i < _automaticShots; i++) {
+            if (!_currencyController.HasEnoughCurrency(_shotsCost, 0))
+                return;
+
+            _currencyController.SpendCurrency(_shotsCost, 0);
+            _shotsToFire++;
+        }
     }
 }

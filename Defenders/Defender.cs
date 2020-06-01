@@ -52,19 +52,19 @@ public class Defender : MonoBehaviour {
         DestroyArrows();
 
         if (transform.position.y != 5) {
-            _upArrow = Instantiate(_arrow, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.identity);
+            _upArrow = Instantiate(_arrow, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z - 0.5f), Quaternion.identity);
             _upArrow.SetArrow("up", gameObject);
         }
         if (transform.position.y != 0) {
-            _downArrow = Instantiate(_arrow, new Vector3(transform.position.x, transform.position.y - 1, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 180)));
+            _downArrow = Instantiate(_arrow, new Vector3(transform.position.x, transform.position.y - 1, transform.position.z - 0.5f), Quaternion.Euler(new Vector3(0, 0, 180)));
             _downArrow.SetArrow("down", gameObject);
         }
         if (transform.position.x != 11) {
-            _rightArrow = Instantiate(_arrow, new Vector3(transform.position.x + 1, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, -90)));
+            _rightArrow = Instantiate(_arrow, new Vector3(transform.position.x + 1, transform.position.y, transform.position.z - 0.5f), Quaternion.Euler(new Vector3(0, 0, -90)));
             _rightArrow.SetArrow("right", gameObject);
         }
         if (transform.position.x != 0) {
-            _leftArrow = Instantiate(_arrow, new Vector3(transform.position.x - 1, transform.position.y, transform.position.z), Quaternion.Euler(new Vector3(0, 0, 90)));
+            _leftArrow = Instantiate(_arrow, new Vector3(transform.position.x - 1, transform.position.y, transform.position.z - 0.5f), Quaternion.Euler(new Vector3(0, 0, 90)));
             _leftArrow.SetArrow("left", gameObject);
         }
 
@@ -94,7 +94,7 @@ public class Defender : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetMouseButtonDown(0) && !_justCreated)
+        if ((Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)) && !_justCreated)
             DestroyArrows();
 
         _justCreated = false;

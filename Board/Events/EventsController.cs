@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class EventsController : MonoBehaviour {
     private EventListController eventListController;
-    private EventPopupController eventPopupController;
+    private EventDisplayController eventDisplayController;
     private WeatherSignController _weatherSignController;
     private RelationshipsController _relationshipsController;
     private CurrencyController _currencyController;
@@ -14,40 +14,66 @@ public class EventsController : MonoBehaviour {
 
     // Push events into queue for narrative continuation
     private SingleEvent _pendingEvent;
+ 
+    private SingleEvent _gameOverEvent;
 
     private void Start() {
         eventListController = FindObjectOfType<EventListController>();
-        eventPopupController = FindObjectOfType<EventPopupController>();
+        eventDisplayController = FindObjectOfType<EventDisplayController>();
         _weatherSignController = FindObjectOfType<WeatherSignController>();
         _relationshipsController = FindObjectOfType<RelationshipsController>();
         _currencyController = FindObjectOfType<CurrencyController>();
         _boardEvents = FindObjectOfType<BoardEvents>();
     }
 
-    //TODO execute changeBoardMetrics in EventSidebarController
-
     public void NextEvent(int currentWave, int currentTurn) {
         SingleEvent sEvent;
 
-        if (currentTurn == 0 && currentWave == 0) {
-            sEvent = eventListController.GetStartEvent();
+        if (currentTurn == 0) {
+            ShootStartEvents(currentWave);
+            return;
+        
+        } else if (Random.Range(0, 5) < 1) {
+            // 1 in 5 chances you get a random event (board event included)
+            if (_pendingEvent != null)
+                sEvent = _pendingEvent;
+            else
+                sEvent = eventListController.GetRandomEvent();
 
-        } else if (currentTurn == 0 && currentWave == 1) {
+        } else if (Random.Range(0, 10) < 1)
+            // 1 in 10 chances you get a board event
+            sEvent = eventListController.GetBoardEvent();
+
+        else
+            sEvent = null;
+
+        _shootEvent(sEvent);
+    }
+
+    public void ShootStartEvents(int currentWave) {
+        SingleEvent sEvent;
+
+        switch (currentWave) {
+            case 0:
+            sEvent = eventListController.GetStartEvent();
+            break;
+
+            case 1:
             sEvent = eventListController.GetCutBRSEvent();
             FindObjectOfType<BRS>().SetNormalBRS();
+            break;
 
-        } else if (Random.Range(0, 5) > 10) {
-        //} else if (Random.Range(0, 5) < 1) {
-            // 1 in 5 chances you get a random event
-            
-            if (_pendingEvent != null) {
-                sEvent = _pendingEvent;
-            } else {
-                sEvent = eventListController.GetRandomEvent();
-            }
+            case 2:
+            sEvent = eventListController.GetX71Event();
+            break;
 
-        } else {
+            case 3:
+            sEvent = eventListController.GetP36Event();
+            break;
+
+            default:
             sEvent = null;
+            break;
         }
 
         _shootEvent(sEvent);
@@ -57,16 +83,15 @@ public class EventsController : MonoBehaviour {
         if (sEvent == null)
             return;
         
+        _triggerEventDisplay(sEvent);
         _manageEventAffects(sEvent);
-        _triggerEventPopup(sEvent);
     }
 
-    private void _triggerEventPopup(SingleEvent sEvent) {
-       eventPopupController.Popup(sEvent);
+    private void _triggerEventDisplay(SingleEvent sEvent) {
+        eventDisplayController.Display(sEvent);
     }
 
     private void _manageEventAffects(SingleEvent sEvent) {
-
         switch (sEvent.board_event) {
             case "dust":
             _weatherSignController.ShowDustSign();
@@ -82,10 +107,6 @@ public class EventsController : MonoBehaviour {
 
             case "blue_flash":
             _boardEvents.TriggerBlueFlash();
-            break;
-
-            case "defender":
-                // TODO
             break;
 
             default:
@@ -111,5 +132,10 @@ public class EventsController : MonoBehaviour {
             return;
         else if (Input.GetKeyDown(KeyCode.RightAlt))
             return;
+    }
+
+    public void GetGameOverEvent(string reationshipIndex, bool isLow) {
+        _gameOverEvent = eventListController.GetGameOver(reationshipIndex, isLow);
+        _shootEvent(_gameOverEvent);
     }
 }

@@ -9,7 +9,6 @@ public class Arrow : MonoBehaviour {
 
     public void SetArrow(string direction, GameObject parent) {
         _direction = direction;
-
         _parent = parent;
     }
 

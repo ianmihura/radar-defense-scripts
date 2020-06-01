@@ -47,8 +47,10 @@ public class Health : MonoBehaviour {
         if (GetComponent<Defender>())
             _heatZones.DefenderKilled(transform.position);
 
-        else if (GetComponent<Attacker>())
+        else if (GetComponent<Attacker>()) {
+            FindObjectOfType<ScoreController>().AddKill();
             GetComponent<Exploder>().Explode();
+        }
 
         if (_currentWarningSign)
             Destroy(_currentWarningSign);
@@ -57,6 +59,7 @@ public class Health : MonoBehaviour {
     }
 
     public void DestroyEscapingAttacker() {
+        FindObjectOfType<ScoreController>().AddEnemyScore();
         Destroy(gameObject);
     }
 }

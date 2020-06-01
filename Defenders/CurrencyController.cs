@@ -116,7 +116,7 @@ public class CurrencyController : MonoBehaviour {
         _powerText.text = power.ToString();
         _moneyText.text = money.ToString();
 
-        _powerTextToAdd.text = _powerTextToAdd.text == "0" ? "+" + _powerTotalNextTurn : "0";
-        _moneyTextToAdd.text = _moneyTextToAdd.text == "0" ? "+" + _moneyTotalNextTurn : "0";
+        _powerTextToAdd.text = "+" + _powerTotalNextTurn;
+        _moneyTextToAdd.text = "+" + _moneyTotalNextTurn;
     }
 }

@@ -89,7 +89,7 @@ public class ControlTower : MonoBehaviour {
     private void _destroyTower() {
         _isFixable = _isActive = false;
 
-        FindObjectOfType<RelationshipsController>().AddToAll(-1);
+        FindObjectOfType<RelationshipsController>().AddToAll();
         FindObjectOfType<BoardEvents>().TriggerBlueFlash();
 
         GetComponentInChildren<SpriteRenderer>().sprite = BrokenControlTower;

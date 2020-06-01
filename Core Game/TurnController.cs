@@ -4,14 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TurnController : MonoBehaviour {
-    private int _currentTurn = 0;
+    [SerializeField] private int _currentTurn = 0;
+    private bool _isGameOver = false;
     private bool _spawning = true;
-    private bool _cooldown = false;
     private int _cooldownCounter;
     private void _cooldownCounterReset() => _cooldownCounter = 50;
     private void _cooldownCount() => _cooldownCounter -= 1;
     private bool _isCool => _cooldownCounter <= 0;
-
 
     private EventsController _events;
     private WaveController _waveController;
@@ -31,19 +30,25 @@ public class TurnController : MonoBehaviour {
         _boardEvents = FindObjectOfType<BoardEvents>();
 
         _cooldownCounterReset();
+
+        StartCoroutine(_firstEvent());
     }
 
     private void Update() {
-        if (_isCool && Input.GetKeyDown(KeyCode.Space)) {
+        if (_isCool && Input.GetKeyDown(KeyCode.Space) && !_isGameOver)
             StartCoroutine(NextTurn());
-        }
 
         _cooldownCount();
     }
 
     private void OnMouseDown() {
-        if(_isCool)
+        if (_isCool && !_isGameOver)
             StartCoroutine(NextTurn());
+    }
+
+    IEnumerator _firstEvent() {
+        yield return new WaitForSeconds(1.5f);
+        _events.NextEvent(0, 0);
     }
 
     IEnumerator NextTurn() {
@@ -74,19 +79,18 @@ public class TurnController : MonoBehaviour {
 
     private void _loadNextTurn() {
         _currentTurn++;
+        FindObjectOfType<ScoreController>().AddPlayerTurn();
 
-        if (_waveController.IsLoadNextWave()) {
-            //TODO wave transition
+        if (_waveController.IsLoadNextWave())
+            //TODO wave transition animation
             _nextWave();
-        }
 
         _events.NextEvent(_waveController.GetCurrentWave(), _currentTurn);
     }
 
     private void _nextWave() {
-        foreach (var spawner in _attackerSpawners) {
+        foreach (var spawner in _attackerSpawners)
             spawner.UpdateWaveDifficulty();
-        }
 
         _currentTurn = 0;
         _waveController.NextWave();
@@ -95,35 +99,30 @@ public class TurnController : MonoBehaviour {
     }
 
     private void _attackerSpawn() {
-        if (_spawning) {
-            foreach (var spawner in _attackerSpawners) {
+        if (_spawning)
+            foreach (var spawner in _attackerSpawners)
                 spawner.SpawnAttackers();
-            }
-        }
     }
 
     private void _attackerWalk() {
         var attackers = FindObjectsOfType<Attacker>();
 
-        foreach (var attacker in attackers) {
+        foreach (var attacker in attackers)
             attacker.Walk();
-        }
     }
 
     private void _defenderWalk() {
         var defenders = FindObjectsOfType<Defender>();
 
-        foreach (var defender in defenders) {
+        foreach (var defender in defenders)
             defender.Walk();
-        }
     }
 
     private void _defenderFire() {
         var shooters = FindObjectsOfType<Shooter>();
 
-        foreach (var shooter in shooters) {
+        foreach (var shooter in shooters)
             shooter.Fire();
-        }
     }
 
     public void SetSpawning(bool spawning) {
@@ -132,5 +131,10 @@ public class TurnController : MonoBehaviour {
 
     public int GetCurrentTurn() {
         return _currentTurn;
+    }
+
+    public void LoadRelationshipGameOver(string relationshipIndex, bool isLow) {
+        _isGameOver = true;
+        _events.GetGameOverEvent(relationshipIndex, isLow);
     }
 }

@@ -29,30 +29,82 @@ public class EventListController : MonoBehaviour {
         return GetEventById("0010");
     }
 
+    public SingleEvent GetX71Event() {
+        return GetEventById("0020");
+    }
+
+    public SingleEvent GetP36Event() {
+        return GetEventById("0030");
+    }
+
+    public SingleEvent GetGameOver(string reationshipIndex, bool isLow) {
+        string id = "";
+
+        switch (reationshipIndex) {
+            case "4":
+            //morale
+            id = isLow ? "5000" : "5010";
+            break;
+
+            case "3":
+            //comradery
+            id = isLow ? "5020" : "5030";
+            break;
+
+            case "2":
+            //loyalty
+            id = isLow ? "5040" : "5050";
+            break;
+
+            default:
+            id = "5060";
+            break;
+        }
+        
+        return GetEventById(id);
+
+        // TODO switch for relationship index
+    }
+
     public SingleEvent GetEventById(string id) {
         int group = int.Parse(id.Substring(0, 1));
-        int evt = int.Parse(id.Substring(1, 2));
-        int order = int.Parse(id.Substring(3, 1));
 
-        // evt is the lowest place (in the array) that the Event can be in
-        SingleEvent returnEvent = GetEventGroup(group).events[evt];
+        SingleEvent returnEvent = null;
+        SingleEvent[] eventGroup = GetEventGroup(group).events;
 
-        // get the real index (may be higher than inicial returnEvent)
-        // int returnEventIndex = _getEventIndex(returnEvent, evt, group);
-
-        // (order) amount more over the inicial index
-        // returnEvent = GetEventGroup(group).events[returnEventIndex + order];
-
-        if (returnEvent.id != int.Parse(id)) {
-            Debug.Log("found wrong event");
-            Debug.Log(returnEvent.id);
+        foreach (SingleEvent sEvent in eventGroup) {
+            if (sEvent.id == int.Parse(id)) {
+                returnEvent = sEvent;
+                break;
+            }
         }
-        Debug.Log(id);
+
+        if (returnEvent == null)
+            Debug.Log("Event not found");
+        else
+            Debug.Log(id);
 
         return returnEvent;
     }
 
-    // TODO: random event
+    public SingleEvent GetBoardEvent() {
+        return GetEventById(_getNextBoardEvent());
+    }
+
+    private string _getNextBoardEvent() {
+        switch (Random.Range(0, 4)) {
+            case 0:
+            return "1030";
+            case 1:
+            return "1040";
+            case 2:
+            return "2060";
+            case 3:
+            default:
+            return "1060";
+        }
+    }
+
     public SingleEvent GetRandomEvent() {
         return GetEventById(_getNextEventId());
     }

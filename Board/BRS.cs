@@ -7,8 +7,8 @@ public class BRS : MonoBehaviour {
     private int _power = 1;
     private int _money = 1;
 
-    private int _normalPower = 1;
-    private int _normalMoney = 1;
+    private int _normalPower = 0;
+    private int _normalMoney = 0;
 
     public int GetPower => _power;
     public int GetMoney => _money;

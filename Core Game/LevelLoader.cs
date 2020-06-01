@@ -5,15 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour {
 
-    // current index 
-    // int _currentSceneIndex;
-    //
-    // public void LoadNextScene() {
-    //     SceneManager.LoadScene(_currentSceneIndex + 1);
-    //     
-    //     _currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-    // }
-
     public void LoadMainMenu() {
         SceneManager.LoadScene("StartScene");
     }
@@ -22,7 +13,16 @@ public class LevelLoader : MonoBehaviour {
         SceneManager.LoadScene("OptionsScene");
     }
 
+    public void LoadCredits() {
+        SceneManager.LoadScene("CreditsScene");
+    }
+
     public void LoadPlay() {
+        FindObjectOfType<TransformVerticalMover>().DestroyMe();
         SceneManager.LoadScene("PlayScene");
+    }
+
+    public void LoadGameOver() {
+        SceneManager.LoadScene("GameOverScene");
     }
 }

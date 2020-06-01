@@ -5,7 +5,7 @@
          "events":[
             {
                "id":"0000",
-               "title":"Start Event",
+               "title":"Welcome",
                "story":"You are assigned to a new station, nearest to the front line. The previous General has died, killed, probably. The station in functional, but not intact. Maned with untrustworthy soldiers and officers. War makes men weary.\nYou get briefed shortly. Everybody has something urgent to do.",
                "choice_id":"",
                "choice_text":"",
@@ -20,7 +20,7 @@
             {
                "id":"0010",
                "title":"Closing Resource Supply",
-               "story":"A virtual meeting is scheduled with Central Base. “Due to the costs of the war, key resource supply has been exclusively dedicated to central and transport operations. Communication lines will ...” You understand the meeting will lasts hours.",
+               "story":"A virtual meeting is scheduled with Central Base. 'Due to the costs of the war, key resource supply has been exclusively dedicated to central and transport operations. Communication lines will...' You understand the meeting will lasts hours.",
                "choice_id":"0011, 0012, 0013",
                "choice_text":"You listen, You rise concerns, You leave",
                "loyalty":"",
@@ -34,7 +34,7 @@
             {
                "id":"0011",
                "title":"You listen silently",
-               "story":"The meeting lasts longer than expected, tho little else is said that interests you. Your superiors thank you for your patience and hard work.",
+               "story":"The meeting lasts longer than expected, though little else is said that interests you. Your superiors thank you for your patience and hard work.",
                "choice_id":"",
                "choice_text":"",
                "loyalty":5,
@@ -51,8 +51,8 @@
                "story":"Your position is heard. You find support from fellow Generals, and discusions are had. In the end, the supply chain is still reduced, but you have made your position clear.",
                "choice_id":"",
                "choice_text":"",
-               "loyalty":5,
-               "comradery":"",
+               "loyalty":"",
+               "comradery":5,
                "morale":"",
                "money":"",
                "power":"",
@@ -65,9 +65,9 @@
                "story":"You have more important issues to attend right now. You leave someone of confidence to attend the meeting. They will report only the highlights.",
                "choice_id":"",
                "choice_text":"",
-               "loyalty":5,
+               "loyalty":"",
                "comradery":"",
-               "morale":"",
+               "morale":5,
                "money":"",
                "power":"",
                "board_event":"",
@@ -90,7 +90,7 @@
             {
                "id":"0030",
                "title":"P36",
-               "story":"Airstrike has been re-enabled in your sector. Politics shifts these things. Things are aiming to get uglier.",
+               "story":"Airstrike has been re-introduced to your sector. Local Operations is not optimist: things are expected to get uglier.",
                "choice_id":"",
                "choice_text":"",
                "loyalty":"",
@@ -375,7 +375,7 @@
             {
                "id":1080,
                "title":"Offline",
-               "story":"A tower has gone offline! Scavengers, or a power failure. No explosion is registered.",
+               "story":"A power central has gone offline. Scavengers, or a power failure. No explosion is registered.",
                "choice_id":"1081, 1082",
                "choice_text":"Go check, Dismiss",
                "loyalty":"",
@@ -383,13 +383,13 @@
                "morale":"",
                "money":"",
                "power":"",
-               "board_event":"defender",
+               "board_event":"",
                "image":""
             },
             {
                "id":1081,
                "title":"Go Check",
-               "story":"You send a small convoy with some rangers and an engineer. Some pieces are missing: scavengers. The engineer maneges to rescue some resources, but is unable to fix the station.",
+               "story":"You send a small convoy with some rangers and an engineer. Some pieces are missing. Scavengers. The engineer maneges to rescue some resources, but is unable to fix the station.",
                "choice_id":"",
                "choice_text":"",
                "loyalty":"",
@@ -403,7 +403,7 @@
             {
                "id":1090,
                "title":"Offline",
-               "story":"A tower has gone offline! Scavengers, or a power failure. No explosion is registered.",
+               "story":"A power central has gone offline. Scavengers, or a power failure. No explosion is registered.",
                "choice_id":"1091, 1082",
                "choice_text":"Go check, Dismiss",
                "loyalty":"",
@@ -411,13 +411,13 @@
                "morale":"",
                "money":"",
                "power":"",
-               "board_event":"defender",
+               "board_event":"",
                "image":""
             },
             {
                "id":1091,
                "title":"Go Check",
-               "story":"You send a small convoy with some rangers and an engineer. The station has burned to the ground. The engineer wonders how it managed to stay stable thru the fire. Whoever did it probably removed the power core.",
+               "story":"You send a small convoy with some rangers and an engineer. The station has burned to the ground. The engineer wonders how it managed to stay stable through the fire. The power core is missing.",
                "choice_id":"",
                "choice_text":"",
                "loyalty":"",
@@ -431,7 +431,7 @@
             {
                "id":1100,
                "title":"Offline",
-               "story":"A tower has gone offline! Scavengers, or a power failure. No explosion is registered.",
+               "story":"A power central has gone offline. Scavengers, or a power failure. No explosion is registered.",
                "choice_id":"1101, 1082",
                "choice_text":"Go check, Dismiss",
                "loyalty":"",
@@ -439,13 +439,13 @@
                "morale":"",
                "money":"",
                "power":"",
-               "board_event":"defender",
+               "board_event":"",
                "image":""
             },
             {
                "id":1101,
                "title":"Go Check",
-               "story":"You send a small convoy with some rangers and an engineer. They return puzzled. They claim that there is no station, and the land shows no sign of ever being one.",
+               "story":"You send a small convoy with some rangers and an engineer. They return, puzzled. There is no station, and the land shows no sign of ever being one.",
                "choice_id":"",
                "choice_text":"",
                "loyalty":"",
@@ -588,8 +588,8 @@
                "story":"Your operary tracks the signal to the original source. You try to connect, but realize the station is actually decomissioned. You inform Local Ops, they say they'll handle it from here.",
                "choice_id":"",
                "choice_text":"",
-               "loyalty":1,
-               "comradery":"",
+               "loyalty":"",
+               "comradery":1,
                "morale":"",
                "money":"",
                "power":"",
@@ -599,7 +599,7 @@
             {
                "id":1142,
                "title":"Inform Intelligence",
-               "story":"You head to Intelligence Offices in the second pavilion with the crypted message. Dark, segregated office with darker people. They're not happy to see you. A few phonecalls are made, a hellicopter arrives. Before you get dismissed, they make you sign a security clearence. \"For your political protection\" they say, tho you're unable to read it fully.",
+               "story":"You head to Intelligence Offices in the second pavilion with the crypted message. Dark, segregated office with darker people. They're not happy to see you. A few phonecalls are made, a hellicopter arrives. Before you get dismissed, they make you sign a security clearence. \"For your political protection\" they say, though you're unable to read it fully.",
                "choice_id":"",
                "choice_text":"",
                "loyalty":2,
@@ -627,7 +627,7 @@
             {
                "id":1151,
                "title":"Track Coordenates",
-               "story":"You track the coordenates to Local Operations. You connect with them directly. They seem surprised, completely oblivious. The beacon dies shortly after.",
+               "story":"You track the coordenates to Local Operations. You connect with them directly. They seem surprised, and unhappy. The beacon dies shortly thereafter.",
                "choice_id":"",
                "choice_text":"",
                "loyalty":-1,
@@ -641,7 +641,7 @@
             {
                "id":1152,
                "title":"Inform Intelligence",
-               "story":"You forward the incoming to Intelligence. They ask you to ignore the beacon. 20 minutes later a helicopter arrives and leaves hastily. A couple hours later you get a private telegram from Central asking you for a formal report on the incident.",
+               "story":"You forward the incoming signal to Intelligence. They ask you to ignore the beacon. 20 minutes later a helicopter arrives, and leaves hastily. The next day you get a private telegram from Central asking you for a formal report on the incident.",
                "choice_id":"",
                "choice_text":"",
                "loyalty":1,
@@ -921,7 +921,7 @@
             {
                "id":1271,
                "title":"Dispose soldiers",
-               "story":"You assign a group of fresh soldiers turns for scouting the perimeters.",
+               "story":"You assign turns to a fresh team of scouts to patrol the perimeters.",
                "choice_id":"t1274",
                "choice_text":"Continue",
                "loyalty":"",
@@ -953,7 +953,7 @@
                "choice_id":"",
                "choice_text":"",
                "loyalty":"",
-               "comradery":"",
+               "comradery":-1,
                "morale":"",
                "money":"",
                "power":"",
@@ -1107,7 +1107,7 @@
             },
             {
                "id":2060,
-               "title":"Blue Flash Event",
+               "title":"Blue Flash",
                "story":"A strong blue light obfuscates your view. You hear a loud high pitch. Your thoughts thin out. You lay confused, stunned on your spot. Far away on this very planet, a Power reactor has gone offline.",
                "choice_id":"2061, 2062",
                "choice_text":"Offer help, Dismiss",
@@ -1318,7 +1318,7 @@
             {
                "id":2090,
                "title":"Emergency Beacon",
-               "story":"Your Communications Bay pick up a friendly emergency beacon. It might come from another Control Tower.",
+               "story":"Your Communications Bay picks up a friendly emergency beacon. It might come from another Control Tower.",
                "choice_id":"2091, 2092",
                "choice_text":"Attend, Dismiss",
                "loyalty":"",
@@ -1346,7 +1346,7 @@
             {
                "id":2100,
                "title":"Emergency Beacon",
-               "story":"Communication Bay picka up a friendly emergency beacon. It might come from another Control Tower.",
+               "story":"Communication Bay picks up a friendly emergency beacon. It might come from another Control Tower.",
                "choice_id":"2101, 2092",
                "choice_text":"Attend, Dismiss",
                "loyalty":"",
@@ -1416,7 +1416,7 @@
             {
                "id":2092,
                "title":"Ignore the beacon",
-               "story":"You cannot afford to spend any resources tracing the beacon. It dies off after some hours.",
+               "story":"You cannot afford to spend any resources tracing the beacon. Anyway, it dies off after some hours.",
                "choice_id":"",
                "choice_text":"",
                "loyalty":"",
@@ -1771,7 +1771,7 @@
             {
                "id":3110,
                "title":"Safe passing",
-               "story":"A huge caravan of military trucks are parked outside the main access road to the station. They request access to the Tactical Field, thru your station. Due to their clearence level, you cannot deny the request. They cross the whole station, and cross the Tactical Field gate towards the enemy line.",
+               "story":"A huge caravan of military trucks park outside the main access road. They request access to the Tactical Field, thru your station. Due to their clearence level, you cannot deny the request. They cross the station, and enter the Tactical Field, towards the enemy line.",
                "choice_id":"",
                "choice_text":"",
                "loyalty":1,
@@ -1785,7 +1785,7 @@
             {
                "id":3120,
                "title":"Slient mission",
-               "story":"Intelligence passes you a special mission for a small group of men. The nature of the mission is to remain secret. They leave hastily, across the gate towards the Tactical Field.",
+               "story":"Intelligence informs you of a special mission for a small group of men. The nature of the mission is to remain secret. They round up a few rangers and leave hastily, towards the Tactical Field.",
                "choice_id":"",
                "choice_text":"",
                "loyalty":1,
@@ -2406,7 +2406,7 @@
             {
                "id":4182,
                "title":"Execute the men",
-               "story":"The virus is a security threat, and protocol explicitly says you should take care of security threats inmediately. The men are swiftly terminated and their bodies cremated. A dark day looms over the station.",
+               "story":"The virus is a security threat, and protocol explicitly says you should take care of security threats inmediately. The men are swiftly terminated and their bodies cremated. Dark clouds looms over the station.",
                "choice_id":"",
                "choice_text":"",
                "loyalty":1,
@@ -2691,7 +2691,7 @@
             {
                "id":5060,
                "title":"Killed",
-               "story":"All the towers have been destroyed. The enemy advance to the next station. Your body lies under the rubble that was the station.",
+               "story":"All the towers have been destroyed. The enemy advance to the next station. Your body lies under the rubble.",
                "choice_id":"",
                "choice_text":"",
                "loyalty":"",
