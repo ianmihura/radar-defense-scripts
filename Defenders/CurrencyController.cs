@@ -93,12 +93,11 @@ public class CurrencyController : MonoBehaviour {
     private void _updateToAddAmount() {
         _powerTotalNextTurn = _moneyTotalNextTurn = 0;
         
-        for (var i = 0; i < _powerStations; i++) {
+        for (var i = 0; i < _powerStations; i++)
             _powerTotalNextTurn += PowerAffordance;
-        }
-        for (var i = 0; i < _moneyStations; i++) {
+        
+        for (var i = 0; i < _moneyStations; i++)
             _moneyTotalNextTurn += MoneyAffordance;
-        }
         
         _powerTotalNextTurn += _totalActiveTowers * ControlTowerPowerAffordance;
         _moneyTotalNextTurn += _totalActiveTowers * ControlTowerMoneyAffordance;

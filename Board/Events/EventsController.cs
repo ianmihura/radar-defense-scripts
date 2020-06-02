@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-
 public class EventsController : MonoBehaviour {
     private EventListController eventListController;
     private EventDisplayController eventDisplayController;
@@ -14,7 +13,6 @@ public class EventsController : MonoBehaviour {
 
     // Push events into queue for narrative continuation
     private SingleEvent _pendingEvent;
- 
     private SingleEvent _gameOverEvent;
 
     private void Start() {

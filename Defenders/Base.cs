@@ -18,16 +18,11 @@ public class Base : MonoBehaviour {
             totalHealth += controlTower.GetCurrentHealth();
         
         if (totalHealth <= 0)
-            StartCoroutine(_loadGameOver());
+            StartCoroutine(FindObjectOfType<TurnController>().LoadGameOver());
     }
 
     private void _startActiveTowers() {
         foreach (var controlTower in controlTowers)
             if (controlTower.IsActive) FindObjectOfType<CurrencyController>().AddActiveTower();
     }
-
-    private IEnumerator _loadGameOver() {
-        yield return new WaitForSeconds(1f);
-        FindObjectOfType<LevelLoader>().LoadGameOver();
-    } 
 }

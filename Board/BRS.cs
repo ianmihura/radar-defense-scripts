@@ -1,23 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class BRS : MonoBehaviour {
-    private int _power = 1;
-    private int _money = 1;
+    private int _normalPower;
+    private int _normalMoney;
 
-    private int _normalPower = 0;
-    private int _normalMoney = 0;
+    private int _power;
+    private int _money;
 
     public int GetPower => _power;
     public int GetMoney => _money;
-    
+
     public void SetPower(int power) => _power = power;
     public void SetMoney(int money) => _money = money;
 
+    private void Start() {
+        SetPower(PlayerPrefsController.GetBRS * 2);
+        SetMoney(PlayerPrefsController.GetBRS * 2);
+
+        _normalPower = PlayerPrefsController.GetBRS;
+        _normalMoney = PlayerPrefsController.GetBRS;
+    }
+
     public void SetNormalBRS() {
-        _power = _normalPower;
-        _money = _normalMoney;
+        SetPower(_normalPower);
+        SetMoney(_normalMoney);
     }
 }

@@ -8,6 +8,8 @@ public class ScoreController : MonoBehaviour {
     private int _playerTurns = 0;
     private int _kills = 0;
 
+    //private Dictionary<string, int> _relationships;
+
     private void Awake() {
         DontDestroyOnLoad(gameObject);
     }
@@ -34,5 +36,18 @@ public class ScoreController : MonoBehaviour {
 
     public string GetKills() {
         return _kills.ToString();
+    }
+
+    public void SetRelationships(int morale, int comradery, int loyalty) {
+        //_relationships = new Dictionary<string, int> {
+        //    { "morale", morale },
+        //    { "comradery", comradery },
+        //    { "loyalty", loyalty }
+        //};
+    }
+    
+    public string GetRelationship(string relationshipName) {
+        //return _relationships[relationshipName].ToString();
+        return "";
     }
 }

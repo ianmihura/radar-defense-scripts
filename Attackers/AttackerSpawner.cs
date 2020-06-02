@@ -6,7 +6,6 @@ using Random = UnityEngine.Random;
 
 public class AttackerSpawner : MonoBehaviour {
 
-    bool _spawning = true;
     [SerializeField] Attacker[] attackerArray;
     private WaveController _waveController;
     private int _waveDifficulty = 0;

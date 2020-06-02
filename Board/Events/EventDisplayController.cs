@@ -15,7 +15,9 @@ public class EventDisplayController : MonoBehaviour {
     }
 
     public void ChoiceSelected(string choiceSelected) {
-        if (choiceSelected != "close")
+        if (choiceSelected == "end")
+            StartCoroutine(FindObjectOfType<TurnController>().LoadGameOver());
+        else if (choiceSelected != "close")
             FindObjectOfType<EventsController>().ManageEventAnswer(choiceSelected, choiceSelected[0] == 't');
 
         DestroyOptions();
@@ -58,9 +60,8 @@ public class EventDisplayController : MonoBehaviour {
 
     public void DestroyOptions() {
         var options = FindObjectsOfType<OptionButton>();
-        for (int i = 0; i < options.Length; i++) {
+        for (int i = 0; i < options.Length; i++)
             options[i].DestroyMe();
-        }
     }
 
 }

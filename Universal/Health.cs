@@ -25,9 +25,10 @@ public class Health : MonoBehaviour {
         if (health <= 0) {
             Die();
             return true;
-        } else if (GetComponent<Defender>() && health == 1) {
-            _warningSign();
         }
+
+        if (GetComponent<Defender>() && health == 1)
+            _warningSign();
 
         return false;
     }

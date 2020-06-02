@@ -23,15 +23,13 @@ public class Plane : MonoBehaviour {
             _dropLoop++;
         }
 
-        if (_bombsDroped > 20) {
+        if (_bombsDroped > 20)
             Destroy(gameObject);
-        }
     }
 
     private void DropBomb() {
-        var oneBomb = Instantiate(
+        Instantiate(
             bomb,
-            //transform.position,
             new Vector2(transform.position.x - 5f, transform.position.y),
             Quaternion.identity);
     }

@@ -137,4 +137,9 @@ public class TurnController : MonoBehaviour {
         _isGameOver = true;
         _events.GetGameOverEvent(relationshipIndex, isLow);
     }
+
+    public IEnumerator LoadGameOver() {
+        yield return new WaitForSeconds(1f);
+        FindObjectOfType<LevelLoader>().LoadGameOver();
+    }
 }

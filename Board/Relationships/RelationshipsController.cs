@@ -8,12 +8,20 @@ public class RelationshipsController : MonoBehaviour {
     private Slider _comraderySlider;
     private Slider _loyaltySlider;
 
+    private int _morale;
+    private int _comradery;
+    private int _loyalty;
+
+    public int GetMorale => _morale;
+    public int GetComradery => _comradery;
+    public int GetLoyalty => _loyalty;
+
     private readonly string MORALE_INDEX = "4";
     private readonly string COMRADERY_INDEX = "2";
     private readonly string LOYALTY_INDEX = "3";
 
-    private readonly int ADD_VALUE = 5;
-    private readonly int RELATIONSHIP_START = 5;
+    private int RELATIONSHIP_START;
+    private int ADD_VALUE;
 
     private readonly int LOW_BOUND = 25;
     private readonly int MEDIUM_BOUND = 50;
@@ -22,19 +30,15 @@ public class RelationshipsController : MonoBehaviour {
     private readonly int LOW_ENDSTATE = 0;
     private readonly int HIGH_ENDSTATE = 100;
 
-    public void AddMorale(int amount) { GetMorale += (ADD_VALUE * amount); _checkRelationships(GetMorale, MORALE_INDEX); }
-    public void AddComradery(int amount) { GetComradery += (ADD_VALUE * amount); _checkRelationships(GetComradery, COMRADERY_INDEX); }
-    public void AddLoyalty(int amount) { GetLoyalty += (ADD_VALUE * amount); _checkRelationships(GetLoyalty, LOYALTY_INDEX); }
+    public void AddMorale(int amount) { _morale += (ADD_VALUE * amount); _checkRelationships(GetMorale, MORALE_INDEX); }
+    public void AddComradery(int amount) { _comradery += (ADD_VALUE * amount); _checkRelationships(GetComradery, COMRADERY_INDEX); }
+    public void AddLoyalty(int amount) { _loyalty += (ADD_VALUE * amount); _checkRelationships(GetLoyalty, LOYALTY_INDEX); }
 
     public void AddToAll() {
         AddComradery(-1);
         AddMorale(-1);
         AddLoyalty(-1);
     }
-
-    public int GetMorale { get; private set; }
-    public int GetComradery { get; private set; }
-    public int GetLoyalty { get; private set; }
 
     public int GetMoraleLevel => _getLevel(GetMorale);
     public int GetComraderyLevel => _getLevel(GetComradery);
@@ -75,10 +79,13 @@ public class RelationshipsController : MonoBehaviour {
         _setStartupRelationships();
 
         _getSliders();
+
+        RELATIONSHIP_START = PlayerPrefsController.GetRelationshipStart;
+        ADD_VALUE = PlayerPrefsController.GetRelationshipAdd;
     }
 
     private void _setStartupRelationships() {
-        GetMorale = GetComradery = GetLoyalty = RELATIONSHIP_START;
+        _morale = _comradery = _loyalty = RELATIONSHIP_START;
     }
 
     private void _getSliders() {
@@ -100,7 +107,9 @@ public class RelationshipsController : MonoBehaviour {
     private void _checkRelationships(int relationship, string relationshipIndex) {
         _updateSlidersValue();
 
-        if (relationship >= HIGH_ENDSTATE || relationship <= LOW_ENDSTATE)
+        if (relationship >= HIGH_ENDSTATE || relationship <= LOW_ENDSTATE) {
             FindObjectOfType<TurnController>().LoadRelationshipGameOver(relationshipIndex, relationship <= LOW_ENDSTATE);
+            FindObjectOfType<ScoreController>().SetRelationships(GetMorale, GetComradery, GetLoyalty);
+        }
     }
 }

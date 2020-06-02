@@ -6,36 +6,16 @@ using UnityEngine;
 public class HeatZones : MonoBehaviour {
     [SerializeField] HZ HZ;
 
-    private List<Vector3> HZPositions;
-
-    private void Start() {
-        HZPositions = new List<Vector3>();
-    }
-
     public void DefenderKilled(Vector3 defenderPosition) {
-        _handleAdjacent();
-        
         _placeHZ(defenderPosition);
     }
 
     public void BoxExec(Vector3 boxPosition) {
-        _handleAdjacent();
-
         _placeHZ(boxPosition);
         _placeHZ(new Vector3(boxPosition.x + 1, boxPosition.y, boxPosition.z + 1));
         _placeHZ(new Vector3(boxPosition.x + 2, boxPosition.y, boxPosition.z + 1));
         _placeHZ(new Vector3(boxPosition.x, boxPosition.y - 1, boxPosition.z + 1));
         _placeHZ(new Vector3(boxPosition.x, boxPosition.y + 1, boxPosition.z + 1));
-    }
-
-    private void _handleAdjacent() {
-        // TODO: handle adjacent
-        // prolongue life of adjacent
-        // if 2 encompass a 3rd, that 3rd becomes a heatzone
-    }
-
-    private void _hasAdjacent() {
-        // HZPositions.Contains(defenderPosition);
     }
 
     private void _placeHZ(Vector3 defenderPosition) {

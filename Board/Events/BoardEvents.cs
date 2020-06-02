@@ -9,7 +9,6 @@ public class BoardEvents : MonoBehaviour {
     [SerializeField] private AsteroidField asteroidField;
 
     private BlueFlash _currentBlueFlash;
-    private AsteroidField _currentAsteroidField;
     private WeatherSignController _weatherSignController;
 
     private bool _isThunderStorm = false;
@@ -43,7 +42,7 @@ public class BoardEvents : MonoBehaviour {
     }
 
     public void TriggerAsteroidField(Vector3 position) {
-        _currentAsteroidField = Instantiate(asteroidField, position, Quaternion.identity);
+        Instantiate(asteroidField, position, Quaternion.identity);
     }
 
     public void PassTurn() {
